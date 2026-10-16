@@ -40,6 +40,26 @@
     <p class="status">불러오는 중…</p>
   </main>
 
+  <!-- 메인(#/) 화면 위쪽에 보여줄 웹앱 카드. 새 웹앱은 여기에 <li class="app-card">를 추가한다 -->
+  <template id="app-cards">
+    <section class="apps" aria-labelledby="apps-title">
+      <h1 class="page-title" id="apps-title">웹앱</h1>
+      <p class="page-subtitle">직접 만든 미니 웹앱을 바로 사용해 보세요</p>
+      <ul class="app-list">
+        <li class="app-card">
+          <article>
+            <h2><a href="apps/2048/">2048</a></h2>
+            <p class="description">방향키나 스와이프로 숫자 타일을 밀어 같은 수끼리 합치는 퍼즐 게임. 점수와 최고 점수를 기록합니다.</p>
+            <div class="app-frame">
+              <iframe src="apps/2048/" title="2048 게임 미리보기" loading="lazy"></iframe>
+            </div>
+            <a class="app-open" href="apps/2048/">전체 화면으로 열기 →</a>
+          </article>
+        </li>
+      </ul>
+    </section>
+  </template>
+
   <footer class="site-footer">
     <div class="container">
       <p>© <span id="year"></span> 나의 블로그</p>

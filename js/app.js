@@ -107,9 +107,12 @@ function postListHtml(posts) {
 }
 
 function homeView(posts) {
+  // 웹앱 카드는 index.html의 <template>에 직접 작성한 정적 마크업이다
+  const appCards = document.getElementById('app-cards')?.innerHTML ?? '';
   return {
     title: '',
     html: `
+      ${appCards}
       <h1 class="page-title">최근 글</h1>
       <p class="page-subtitle">총 ${posts.length}개의 글</p>
       ${postListHtml(posts)}`,
@@ -220,6 +223,22 @@ function parseRoute() {
   return { name: 'notFound' };
 }
 
+// 웹앱 미리보기 iframe 높이를 내용에 맞춘다 (같은 출처일 때만 가능, 실패하면 CSS 기본 높이 유지)
+function fitFrameHeight(iframe) {
+  iframe.addEventListener('load', () => {
+    try {
+      const body = iframe.contentDocument.body;
+      const fit = () => {
+        iframe.style.height = `${Math.ceil(body.getBoundingClientRect().height)}px`;
+      };
+      new ResizeObserver(fit).observe(body);
+      fit();
+    } catch {
+      // 다른 출처라 접근할 수 없으면 그대로 둔다
+    }
+  });
+}
+
 async function render() {
   const current = ++renderCount;
   const route = parseRoute();
@@ -240,6 +259,7 @@ async function render() {
   if (current !== renderCount) return;
 
   app.innerHTML = view.html;
+  app.querySelectorAll('.app-frame iframe').forEach(fitFrameHeight);
   document.title = view.title ? `${view.title} · ${SITE_TITLE}` : SITE_TITLE;
   window.scrollTo(0, 0);
   if (current > 1) app.focus({ preventScroll: true }); // 화면 낭독기가 새 내용을 읽도록

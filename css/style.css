@@ -278,6 +278,67 @@ img {
   color: var(--muted);
 }
 
+/* ===== 웹앱 카드 ===== */
+.apps {
+  margin-bottom: 56px;
+}
+
+.app-list {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app-card {
+  padding: 20px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.app-card h2 {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+.app-card h2 a {
+  color: var(--text);
+}
+
+.app-card h2 a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.app-card .description {
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+
+.app-frame {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.app-frame iframe {
+  display: block;
+  width: 100%;
+  height: 680px; /* 기본값. 같은 출처면 app.js가 내용 높이에 맞춘다 */
+  border: 0;
+}
+
+.app-open {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+}
+
 /* ===== 글 본문 ===== */
 .post-header {
   margin-bottom: 40px;

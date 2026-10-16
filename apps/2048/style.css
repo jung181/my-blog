@@ -1,0 +1,398 @@
+/* ===== 테마 변수 (블로그 css/style.css 값 복사) ===== */
+:root {
+  --bg: #ffffff;
+  --surface: #f9fafb;
+  --text: #1f2328;
+  --muted: #59636e;
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.1);
+  --border: #e5e7eb;
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", "Segoe UI", sans-serif;
+
+  /* 게임 전용 */
+  --on-accent: #ffffff;
+  --board-bg: #d8dee4;
+  --cell-bg: #eef1f4;
+  --overlay-bg: rgba(255, 255, 255, 0.85);
+  --gap: 8px;
+  --radius: 6px;
+
+  /* 타일 단계 (라이트) */
+  --t2-bg: #eef2ff;    --t2-fg: #1f2328;
+  --t4-bg: #dbe4ff;    --t4-fg: #1f2328;
+  --t8-bg: #bfd0ff;    --t8-fg: #1f2328;
+  --t16-bg: #93b4fd;   --t16-fg: #1f2328;
+  --t32-bg: #6090f5;   --t32-fg: #1f2328;
+  --t64-bg: #2563eb;   --t64-fg: #ffffff;
+  --t128-bg: #1d4ed8;  --t128-fg: #ffffff;
+  --t256-bg: #1e40af;  --t256-fg: #ffffff;
+  --t512-bg: #7c3aed;  --t512-fg: #ffffff;
+  --t1024-bg: #6d28d9; --t1024-fg: #ffffff;
+  --t2048-bg: #b45309; --t2048-fg: #ffffff;
+  --tsuper-bg: #1f2328; --tsuper-fg: #ffffff;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --surface: #151b23;
+  --text: #e6edf3;
+  --muted: #9198a1;
+  --accent: #60a5fa;
+  --accent-soft: rgba(96, 165, 250, 0.14);
+  --border: #30363d;
+
+  --on-accent: #0d1117;
+  --board-bg: #161b22;
+  --cell-bg: #21262d;
+  --overlay-bg: rgba(13, 17, 23, 0.85);
+
+  /* 타일 단계 (다크) */
+  --t2-bg: #1c2a44;    --t2-fg: #e6edf3;
+  --t4-bg: #1e3a6e;    --t4-fg: #e6edf3;
+  --t8-bg: #1d4ed8;    --t8-fg: #ffffff;
+  --t16-bg: #2563eb;   --t16-fg: #ffffff;
+  --t32-bg: #3b82f6;   --t32-fg: #0d1117;
+  --t64-bg: #60a5fa;   --t64-fg: #0d1117;
+  --t128-bg: #93c5fd;  --t128-fg: #0d1117;
+  --t256-bg: #bfdbfe;  --t256-fg: #0d1117;
+  --t512-bg: #a78bfa;  --t512-fg: #0d1117;
+  --t1024-bg: #c4b5fd; --t1024-fg: #0d1117;
+  --t2048-bg: #fbbf24; --t2048-fg: #0d1117;
+  --tsuper-bg: #e6edf3; --tsuper-fg: #0d1117;
+
+  color-scheme: dark;
+}
+
+/* ===== 기본 ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  word-break: keep-all;
+  -webkit-text-size-adjust: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ===== 헤더 ===== */
+.game-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 16px;
+}
+
+.game-title {
+  margin: 0;
+  font-size: 2.5rem;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.scores {
+  display: flex;
+  gap: 8px;
+}
+
+.score-box {
+  position: relative;
+  min-width: 72px;
+  padding: 6px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.score-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.score-value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+/* 점수 증가분 표시 (시각 효과 전용) */
+.score-add {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  font-weight: 700;
+  color: var(--accent);
+  pointer-events: none;
+  animation: score-float 600ms ease-out forwards;
+}
+
+@keyframes score-float {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-28px); }
+}
+
+.game-intro {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ===== 버튼 ===== */
+.btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* ===== 보드 ===== */
+.board-wrap {
+  position: relative;
+  width: min(100%, 480px);
+  margin: 0 auto;
+}
+
+.board {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--board-bg);
+  border-radius: 8px;
+  touch-action: none; /* 보드 위 스와이프가 스크롤·새로고침을 일으키지 않게 */
+  user-select: none;
+  -webkit-user-select: none;
+  container-type: inline-size;
+}
+
+.board:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  padding: var(--gap);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.cell {
+  background: var(--cell-bg);
+  border-radius: var(--radius);
+}
+
+.tile-layer {
+  position: absolute;
+  inset: var(--gap);
+}
+
+/* 타일: 절대 위치 + translate로 배치 (퍼센트는 타일 자신의 크기 기준) */
+.tile {
+  --r: 0;
+  --c: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc((100% - 3 * var(--gap)) / 4);
+  height: calc((100% - 3 * var(--gap)) / 4);
+  transform: translate(
+    calc(var(--c) * (100% + var(--gap))),
+    calc(var(--r) * (100% + var(--gap)))
+  );
+  transition: transform 100ms ease-in-out;
+}
+
+.tile-layer.is-settling .tile {
+  transition: none;
+}
+
+.tile-inner {
+  --cell: calc((100cqw - 5 * var(--gap)) / 4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+  background: var(--tile-bg);
+  color: var(--tile-fg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  font-size: 32px; /* 컨테이너 단위를 지원하지 않는 브라우저용 */
+  font-size: calc(var(--cell) * 0.45);
+}
+
+.tile-inner.digits-3 {
+  font-size: 26px;
+  font-size: calc(var(--cell) * 0.38);
+}
+
+.tile-inner.digits-4 {
+  font-size: 20px;
+  font-size: calc(var(--cell) * 0.3);
+}
+
+/* 타일 단계 색상 */
+.tile-2 { --tile-bg: var(--t2-bg); --tile-fg: var(--t2-fg); }
+.tile-4 { --tile-bg: var(--t4-bg); --tile-fg: var(--t4-fg); }
+.tile-8 { --tile-bg: var(--t8-bg); --tile-fg: var(--t8-fg); }
+.tile-16 { --tile-bg: var(--t16-bg); --tile-fg: var(--t16-fg); }
+.tile-32 { --tile-bg: var(--t32-bg); --tile-fg: var(--t32-fg); }
+.tile-64 { --tile-bg: var(--t64-bg); --tile-fg: var(--t64-fg); }
+.tile-128 { --tile-bg: var(--t128-bg); --tile-fg: var(--t128-fg); }
+.tile-256 { --tile-bg: var(--t256-bg); --tile-fg: var(--t256-fg); }
+.tile-512 { --tile-bg: var(--t512-bg); --tile-fg: var(--t512-fg); }
+.tile-1024 { --tile-bg: var(--t1024-bg); --tile-fg: var(--t1024-fg); }
+.tile-2048 { --tile-bg: var(--t2048-bg); --tile-fg: var(--t2048-fg); }
+.tile-super { --tile-bg: var(--tsuper-bg); --tile-fg: var(--tsuper-fg); }
+
+/* 생성: scale 0 → 1 */
+.tile-new {
+  animation: tile-appear 150ms ease-out;
+}
+
+@keyframes tile-appear {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+/* 병합: scale 1 → 1.15 → 1 */
+.tile-merged {
+  animation: tile-pop 150ms ease-in-out;
+}
+
+@keyframes tile-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* ===== 오버레이 (보드 위) ===== */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--overlay-bg);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.overlay[hidden] {
+  display: none;
+}
+
+.overlay-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.overlay-score {
+  margin: 0;
+  color: var(--muted);
+}
+
+.overlay-score strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ===== 안내 ===== */
+.hint,
+.help {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.help {
+  margin-top: 4px;
+}
+
+/* ===== 넓은 화면 ===== */
+@media (min-width: 480px) {
+  :root {
+    --gap: 12px;
+  }
+}
+
+/* ===== 움직임 줄이기 ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

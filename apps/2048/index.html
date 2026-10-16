@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2048</title>
+  <meta name="description" content="같은 숫자를 합쳐 2048을 만드는 퍼즐 게임">
+  <script>
+    // 렌더링 전에 테마를 정해 깜빡임을 막는다 (블로그와 같은 로직)
+    (function () {
+      let theme = null;
+      try { theme = localStorage.getItem('theme'); } catch (e) {}
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="game-header">
+      <h1 class="game-title">2048</h1>
+      <div class="scores">
+        <div class="score-box score-box-current">
+          <span class="score-label">점수</span>
+          <span class="score-value" id="score">0</span>
+        </div>
+        <div class="score-box">
+          <span class="score-label">최고</span>
+          <span class="score-value" id="best">0</span>
+        </div>
+      </div>
+      <p class="game-intro">같은 숫자를 합쳐 2048을 만드세요.</p>
+      <button class="btn" id="btn-new" type="button">새 게임</button>
+    </header>
+
+    <main>
+      <section class="board-wrap" aria-label="게임 보드">
+        <div class="board" tabindex="0" role="application" aria-label="2048 게임 보드. 방향키로 타일을 이동합니다">
+          <div class="grid-bg" aria-hidden="true">
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          </div>
+          <div class="tile-layer" aria-hidden="true"></div>
+        </div>
+
+        <div class="overlay" id="overlay-win" role="dialog" aria-labelledby="win-title" hidden>
+          <p class="overlay-title" id="win-title">2048 달성! 🎉</p>
+          <div class="overlay-actions">
+            <button class="btn" id="btn-continue" type="button">계속하기</button>
+            <button class="btn btn-secondary" id="btn-win-new" type="button">새 게임</button>
+          </div>
+        </div>
+
+        <div class="overlay" id="overlay-over" role="dialog" aria-labelledby="over-title" hidden>
+          <p class="overlay-title" id="over-title">게임 오버</p>
+          <p class="overlay-score">최종 점수 <strong id="final-score">0</strong>점</p>
+          <div class="overlay-actions">
+            <button class="btn" id="btn-retry" type="button">다시 하기</button>
+          </div>
+        </div>
+      </section>
+
+      <p class="hint">보드를 클릭한 뒤 방향키로 조작하세요</p>
+      <p class="help">방향키·WASD 또는 스와이프로 조작 · N: 새 게임</p>
+
+      <p class="sr-only" id="live-polite" aria-live="polite"></p>
+      <p class="sr-only" id="live-assertive" aria-live="assertive"></p>
+    </main>
+  </div>
+</body>
+</html>
